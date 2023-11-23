@@ -1,24 +1,24 @@
-import { SignInSteps, SignUpSteps } from '../features/types/AuthType'
+import { Steps } from '../features/types/AuthType'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 type TAuthState = {
-    signInStep: SignInSteps
-    signUpStep: SignUpSteps
+    signInStep: Steps
+    signUpStep: Steps
 }
 
 const initialState: TAuthState = {
-    signInStep: SignInSteps.First,
-    signUpStep: SignUpSteps.First
+    signInStep: Steps.First,
+    signUpStep: Steps.First
 }
 
 export const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        setSignInStep(state, action: PayloadAction<SignInSteps>) {
+        setSignInStep(state, action: PayloadAction<Steps>) {
             state.signInStep = action.payload
         },
-        setSignUpStep(state, action: PayloadAction<SignUpSteps>) {
+        setSignUpStep(state, action: PayloadAction<Steps>) {
             state.signUpStep = action.payload
         }
     }

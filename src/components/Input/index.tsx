@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useRef, useState } from 'react'
 import './styles.sass'
-import { SignInSteps, SignUpSteps } from '../../features/types/AuthType'
+import { Steps } from '../../features/types/AuthType'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useAppSelector } from '../../hooks/redux'
 
@@ -13,14 +13,15 @@ interface IInput {
     }
     placeholder?: string
     hasArrow?: boolean
-    step?: SignInSteps | SignUpSteps
+    step?: Steps
     setStep?: () => void
     onClickEnter?: () => void
     isActive?: boolean
-    state?: SignInSteps | SignUpSteps
+    state?: Steps
     hasEye?: boolean
-    signIn?: SignInSteps
-    signUp?: SignUpSteps
+    rollingEye?: boolean
+    signIn?: Steps
+    signUp?: Steps
     roundedBottom?: boolean
 }
 
@@ -38,6 +39,7 @@ const Input: React.FC<IInput> = memo(
         isActive = true,
         state,
         hasEye,
+        rollingEye,
         signIn,
         signUp,
         roundedBottom
@@ -54,15 +56,15 @@ const Input: React.FC<IInput> = memo(
                 return { borderRadius: '0px 0px 15px 15px' }
             }
 
-            if (signIn in SignInSteps && signIn !== SignInSteps.First) {
-                if (state === SignInSteps.Second) {
+            if (signIn in Steps && signIn !== Steps.First) {
+                if (state === Steps.Second) {
                     return { borderRadius: '0px 0px 15px 15px' }
                 } else {
                     return { borderRadius: '15px 15px 0px 0px' }
                 }
-            } else if (signUp in SignUpSteps && signUp !== SignUpSteps.First) {
-                if (state === SignUpSteps.Second || state === SignUpSteps.Third) {
-                    if (signUp === SignUpSteps.Second) {
+            } else if (signUp in Steps && signUp !== Steps.First) {
+                if (state === Steps.Second || state === Steps.Third) {
+                    if (signUp === Steps.Second) {
                         return { borderRadius: '0px 0px 15px 15px' }
                     }
                     return { borderRadius: '0px' }
@@ -88,7 +90,7 @@ const Input: React.FC<IInput> = memo(
         }
 
         useEffect(() => {
-            if (signIn !== SignInSteps.Third) return
+            if (signIn !== Steps.Third) return
 
             inputRef.current.blur()
         }, [signIn])
@@ -118,9 +120,9 @@ const Input: React.FC<IInput> = memo(
                         {hasArrow && (
                             <div
                                 className={`arrow ${
-                                    step === SignUpSteps.Third
+                                    (step === Steps.Third || step === Steps.Fourth) && signUp
                                         ? 'heavy-active'
-                                        : step !== SignInSteps.First
+                                        : step !== Steps.First
                                         ? 'active'
                                         : ''
                                 }`}
@@ -129,7 +131,9 @@ const Input: React.FC<IInput> = memo(
                         )}
                         {hasEye && (
                             <div
-                                className={`eye ${isVisiblePassword ? 'active' : ''}`}
+                                className={`eye ${isVisiblePassword ? 'active' : ''} ${
+                                    rollingEye ? 'rolling' : ''
+                                }`}
                                 onClick={handleClickEye}
                                 onMouseDown={handleReset}
                                 onMouseUp={handleReset}

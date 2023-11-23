@@ -1,0 +1,26 @@
+@import "Styles/variables"
+@import "Styles/mixins"
+
+.sign-up-page
+  +center-block()
+  width: 400px
+  padding: 25px
+  background: var(--color-background)
+  border-radius: $border-radius-primary
+  overflow: hidden
+  +anim-op-sc(0, .25s, 0, .25s)
+
+
+  > .title
+    font-size: 18px
+    font-weight: 400
+    text-align: center
+    margin-bottom: 30px
+    color: var(--color-text-primary)
+
+  > .row
+    &.header
+      display: flex
+
+  > .footer
+    margin-top: 20px

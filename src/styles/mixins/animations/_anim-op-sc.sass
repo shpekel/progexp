@@ -1,0 +1,20 @@
+=anim-op-sc($enterDelay, $enterDuration, $exitDelay, $exitDuration)
+  &-enter
+    opacity: 0
+    transform: translate(-50%, -50%) scale(0.1)
+
+  &-enter-active
+    opacity: 1
+    transform: translate(-50%, -50%) scale(1)
+    transition: all $enterDuration ease
+    transition-delay: $enterDelay
+
+  &-exit
+    opacity: 1
+    transform: translate(-50%, -50%) scale(1)
+
+  &-exit-active
+    opacity: 0
+    transform: translate(-50%, -50%) scale(0.1)
+    transition: all $exitDuration ease
+    transition-delay: $exitDelay

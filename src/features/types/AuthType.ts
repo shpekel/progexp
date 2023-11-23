@@ -1,10 +1,4 @@
-export enum SignInSteps {
-    First,
-    Second,
-    Third
-}
-
-export enum SignUpSteps {
+export enum Steps {
     First,
     Second,
     Third,

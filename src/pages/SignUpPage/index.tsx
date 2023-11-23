@@ -1,102 +1,157 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './styles.sass'
 import Input from '../../components/Input'
-import { SignUpSteps } from '../../features/types/AuthType'
+import { Steps } from '../../features/types/AuthType'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import { authActions } from '../../reducers/authReducer'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AuthValidationRegExps } from '../../../shared/auth/validationRegExps'
 import Button from '../../components/Button'
+import { CSSTransition, SwitchTransition } from 'react-transition-group'
+import { Link } from 'react-router-dom'
+import { register } from '../../../shared/auth/register'
+import { validateAndSendNotify } from '../../../shared/auth/validateAndSendNotify'
 
 const SignInPage: React.FC = () => {
     const dispatch = useAppDispatch()
 
-    const [username, setUsername] = useState<string>('')
+    const nodeRef = useRef<HTMLDivElement>(null)
+
+    const [login, setLogin] = useState<string>('')
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [rePassword, setRePassword] = useState<string>('')
+    const [rollingEye, setRollingEye] = useState<boolean>(false)
 
     const step = useAppSelector((state) => state.authReducer.signUpStep)
 
-    const isActiveEmail = step === SignUpSteps.Second || step === SignUpSteps.Third
-    const isActivePassword = step === SignUpSteps.Third || step === SignUpSteps.Fourth
+    const isActiveEmail = step === Steps.Second || step === Steps.Third || step === Steps.Fourth
+    const isActivePassword = step === Steps.Third || step === Steps.Fourth
+
+    const { loginRegExps, passwordRegExps, emailRegExps } = AuthValidationRegExps
 
     const handleClickArrow = () => {
-        if (step === SignUpSteps.First) {
-            dispatch(authActions.setSignUpStep(SignUpSteps.Second))
-        } else if (step === SignUpSteps.Second) {
-            dispatch(authActions.setSignUpStep(SignUpSteps.Third))
-        } else if (step === SignUpSteps.Third) {
-            dispatch(authActions.setSignUpStep(SignUpSteps.Fourth))
+        switch (step) {
+            case Steps.First: {
+                if (
+                    !(
+                        !validateAndSendNotify(!loginRegExps.Length.test(login), 'Invalid Error') ||
+                        !validateAndSendNotify(
+                            !loginRegExps.AllowedChars.test(login),
+                            'Invalid Chars'
+                        )
+                    )
+                ) {
+                    dispatch(authActions.setSignUpStep(Steps.Second))
+                }
+                break
+            }
+            case Steps.Second: {
+                if (
+                    validateAndSendNotify(!emailRegExps.AllowedChars.test(email), 'Invalid Chars')
+                ) {
+                    dispatch(authActions.setSignUpStep(Steps.Third))
+                }
+                break
+            }
+            case Steps.Third: {
+                if (
+                    !(
+                        !validateAndSendNotify(
+                            !passwordRegExps.Length.test(password),
+                            'Invalid Error'
+                        ) ||
+                        !validateAndSendNotify(
+                            !passwordRegExps.AllowedChars.test(password),
+                            'Invalid Chars'
+                        ) ||
+                        !validateAndSendNotify(password !== rePassword, 'Invalid Chars')
+                    )
+                ) {
+                    dispatch(authActions.setSignUpStep(Steps.Fourth))
+                    register(login, password, email).then()
+                }
+                break
+            }
         }
     }
 
-    return (
-        <>
-            <AnimatePresence>
-                {step === SignUpSteps.Fourth && (
-                    <motion.div
-                        className="loading"
-                        initial={{ opacity: 0, transform: 'scale(0.1)', borderRadius: '50%' }}
-                        animate={{ opacity: 1, transform: 'scale(1)', borderRadius: 0 }}
-                        exit={{ opacity: 0, transform: 'scale(0.1)', borderRadius: '50%' }}
-                        transition={{ duration: 0.5, ease: 'easeInOut' }}
-                    >
-                        <div className="circle"></div>
-                        <div className="text">Загрузка...</div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-            <div className="sign-in-page">
-                <div className="title">Регистрация в ProgExp</div>
-                <Input
-                    value={username}
-                    setValue={setUsername}
-                    placeholder="Придумайте логин"
-                    hasArrow
-                    step={step}
-                    setStep={handleClickArrow}
-                    onClickEnter={handleClickArrow}
-                    state={SignUpSteps.First}
-                    signUp={step}
-                />
-                <Input
-                    value={email}
-                    setValue={setEmail}
-                    placeholder="Введите свой E-mail"
-                    isActive={isActiveEmail}
-                    onClickEnter={handleClickArrow}
-                    state={SignUpSteps.Second}
-                    signUp={step}
-                />
-                <Input
-                    value={password}
-                    setValue={setPassword}
-                    type="password"
-                    placeholder="Придумайте пароль"
-                    isActive={isActivePassword}
-                    onClickEnter={handleClickArrow}
-                    state={SignUpSteps.Third}
-                    hasEye
-                    signUp={step}
-                />
-                <Input
-                    value={rePassword}
-                    setValue={setRePassword}
-                    type="password"
-                    placeholder="Повторите пароль"
-                    isActive={isActivePassword}
-                    onClickEnter={handleClickArrow}
-                    state={SignUpSteps.Third}
-                    hasEye
-                    signUp={step}
-                    roundedBottom
-                />
+    const handleClickToSignIn = () => {
+        dispatch(authActions.setSignUpStep(Steps.First))
+    }
 
-                <div className="footer">
-                    <Button text="У меня уже есть аккаунт" />
+    useEffect(() => {
+        if (step === Steps.Third) {
+            setTimeout(() => {
+                setRollingEye(true)
+            }, 500)
+        }
+    }, [step])
+
+    return (
+        <SwitchTransition>
+            <CSSTransition
+                key="sign-up"
+                nodeRef={nodeRef}
+                timeout={250}
+                classNames="sign-up-page"
+                mountOnEnter
+                unmountOnExit
+            >
+                <div className="sign-up-page" ref={nodeRef}>
+                    <div className="title">Регистрация в ProgExp</div>
+                    <Input
+                        value={login}
+                        setValue={setLogin}
+                        placeholder="Придумайте логин"
+                        hasArrow
+                        step={step}
+                        setStep={handleClickArrow}
+                        onClickEnter={handleClickArrow}
+                        state={Steps.First}
+                        signUp={step}
+                    />
+                    <Input
+                        value={email}
+                        setValue={setEmail}
+                        placeholder="Введите свой E-mail"
+                        isActive={isActiveEmail}
+                        onClickEnter={handleClickArrow}
+                        state={Steps.Second}
+                        signUp={step}
+                    />
+                    <Input
+                        value={password}
+                        setValue={setPassword}
+                        type="password"
+                        placeholder="Придумайте пароль"
+                        isActive={isActivePassword}
+                        onClickEnter={handleClickArrow}
+                        state={Steps.Third}
+                        hasEye
+                        rollingEye={rollingEye}
+                        signUp={step}
+                    />
+                    <Input
+                        value={rePassword}
+                        setValue={setRePassword}
+                        type="password"
+                        placeholder="Повторите пароль"
+                        isActive={isActivePassword}
+                        onClickEnter={handleClickArrow}
+                        state={Steps.Third}
+                        hasEye
+                        signUp={step}
+                        roundedBottom
+                    />
+
+                    <div className="footer">
+                        <Link to="/sign-in">
+                            <Button text="У меня уже есть аккаунт" onClick={handleClickToSignIn} />
+                        </Link>
+                    </div>
                 </div>
-            </div>
-        </>
+            </CSSTransition>
+        </SwitchTransition>
     )
 }
 
