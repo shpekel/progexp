@@ -22,14 +22,14 @@ const SignInPage: React.FC = () => {
     const [rePassword, setRePassword] = useState<string>('')
     const [rollingEye, setRollingEye] = useState<boolean>(false)
 
-    const step = useAppSelector((state) => state.authReducer.signUpStep)
+    const step = useAppSelector((state) => state.authReducer.step)
 
     const isActiveEmail = step === Steps.Second || step === Steps.Third || step === Steps.Fourth
     const isActivePassword = step === Steps.Third || step === Steps.Fourth
 
     const { loginRegExps, passwordRegExps, emailRegExps } = AuthValidationRegExps
 
-    const handleClickArrow = () => {
+    const handleClick = () => {
         switch (step) {
             case Steps.First: {
                 if (
@@ -41,7 +41,7 @@ const SignInPage: React.FC = () => {
                         )
                     )
                 ) {
-                    dispatch(authActions.setSignUpStep(Steps.Second))
+                    dispatch(authActions.setStep(Steps.Second))
                 }
                 break
             }
@@ -49,7 +49,7 @@ const SignInPage: React.FC = () => {
                 if (
                     validateAndSendNotify(!emailRegExps.AllowedChars.test(email), 'Invalid Chars')
                 ) {
-                    dispatch(authActions.setSignUpStep(Steps.Third))
+                    dispatch(authActions.setStep(Steps.Third))
                 }
                 break
             }
@@ -67,7 +67,7 @@ const SignInPage: React.FC = () => {
                         !validateAndSendNotify(password !== rePassword, 'Invalid Chars')
                     )
                 ) {
-                    dispatch(authActions.setSignUpStep(Steps.Fourth))
+                    dispatch(authActions.setStep(Steps.Fourth))
                     register(login, password, email).then()
                 }
                 break
@@ -76,7 +76,12 @@ const SignInPage: React.FC = () => {
     }
 
     const handleClickToSignIn = () => {
-        dispatch(authActions.setSignUpStep(Steps.First))
+        dispatch(authActions.setStep(Steps.First))
+
+        setLogin('')
+        setPassword('')
+        setRePassword('')
+        setEmail('')
     }
 
     useEffect(() => {
@@ -105,8 +110,8 @@ const SignInPage: React.FC = () => {
                         placeholder="Придумайте логин"
                         hasArrow
                         step={step}
-                        setStep={handleClickArrow}
-                        onClickEnter={handleClickArrow}
+                        setStep={handleClick}
+                        onClickEnter={handleClick}
                         state={Steps.First}
                         signUp={step}
                     />
@@ -115,7 +120,7 @@ const SignInPage: React.FC = () => {
                         setValue={setEmail}
                         placeholder="Введите свой E-mail"
                         isActive={isActiveEmail}
-                        onClickEnter={handleClickArrow}
+                        onClickEnter={handleClick}
                         state={Steps.Second}
                         signUp={step}
                     />
@@ -125,7 +130,7 @@ const SignInPage: React.FC = () => {
                         type="password"
                         placeholder="Придумайте пароль"
                         isActive={isActivePassword}
-                        onClickEnter={handleClickArrow}
+                        onClickEnter={handleClick}
                         state={Steps.Third}
                         hasEye
                         rollingEye={rollingEye}
@@ -137,7 +142,7 @@ const SignInPage: React.FC = () => {
                         type="password"
                         placeholder="Повторите пароль"
                         isActive={isActivePassword}
-                        onClickEnter={handleClickArrow}
+                        onClickEnter={handleClick}
                         state={Steps.Third}
                         hasEye
                         signUp={step}

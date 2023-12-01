@@ -8,7 +8,6 @@ const App: React.FC = () => {
     return (
         <BrowserRouter>
             <Routes>
-                {/*<Route path="/" element={<SignInPage />} />*/}
                 <Route path="/" element={<div>зуйдуша</div>} />
                 <Route path="sign-in" element={<SignInPage />} />
                 <Route path="sign-up" element={<SignUpPage />} />

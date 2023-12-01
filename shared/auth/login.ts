@@ -1,6 +1,6 @@
 import { AuthApi } from './api'
 
-export const signin = async (login: string, password: string) => {
+export const login = async (login: string, password: string) => {
     await fetch(AuthApi.SignIn, {
         method: 'POST',
         headers: {

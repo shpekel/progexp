@@ -44,9 +44,6 @@ const Input: React.FC<IInput> = memo(
         signUp,
         roundedBottom
     }) => {
-        // const currentSignInStep = useAppSelector((state) => state.authReducer.signInStep)
-        // const currentSignUpStep = useAppSelector((state) => state.authReducer.signUpStep)
-
         const [isVisiblePassword, setIsVisiblePassword] = useState<boolean>(false)
 
         const inputRef = useRef<HTMLInputElement>(null)

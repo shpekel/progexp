@@ -5,11 +5,10 @@ import { Steps } from '../../features/types/AuthType'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import { authActions } from '../../reducers/authReducer'
 import Checkbox from '../../components/Checkbox'
-import { AnimatePresence, motion } from 'framer-motion'
 import Button from '../../components/Button'
 import { Link } from 'react-router-dom'
 import { CSSTransition, SwitchTransition } from 'react-transition-group'
-import { signin } from '../../../shared/auth/signin'
+import { login as apiLogin } from '../../../shared/auth/login'
 import { validateAndSendNotify } from '../../../shared/auth/validateAndSendNotify'
 import { AuthValidationRegExps } from '../../../shared/auth/validationRegExps'
 
@@ -22,11 +21,11 @@ const SignInPage: React.FC = () => {
     const [password, setPassword] = useState<string>('')
     const [isRememberMe, setIsRememberMe] = useState<boolean>(true)
 
-    const step = useAppSelector((state) => state.authReducer.signInStep)
+    const step = useAppSelector((state) => state.authReducer.step)
 
     const { loginRegExps, passwordRegExps } = AuthValidationRegExps
 
-    const handleClickArrow = () => {
+    const handleClick = () => {
         console.log(login)
         switch (step) {
             case Steps.First: {
@@ -39,7 +38,7 @@ const SignInPage: React.FC = () => {
                         )
                     )
                 ) {
-                    dispatch(authActions.setSignInStep(Steps.Second))
+                    dispatch(authActions.setStep(Steps.Second))
                 }
                 break
             }
@@ -50,13 +49,20 @@ const SignInPage: React.FC = () => {
                         'Invalid Chars'
                     )
                 ) {
-                    dispatch(authActions.setSignInStep(Steps.Third))
-                    signin(login, password)
+                    dispatch(authActions.setStep(Steps.Third))
+                    apiLogin(login, password)
                     console.log('her')
                 }
                 break
             }
         }
+    }
+
+    const handleClickToSignUp = () => {
+        dispatch(authActions.setStep(Steps.First))
+
+        setLogin('')
+        setPassword('')
     }
 
     return (
@@ -91,8 +97,8 @@ const SignInPage: React.FC = () => {
                         placeholder="Введите логин"
                         hasArrow
                         step={step}
-                        setStep={handleClickArrow}
-                        onClickEnter={handleClickArrow}
+                        setStep={handleClick}
+                        onClickEnter={handleClick}
                         state={Steps.First}
                         signIn={step}
                     />
@@ -102,7 +108,7 @@ const SignInPage: React.FC = () => {
                         type="password"
                         placeholder="Введите пароль"
                         isActive={step !== Steps.First}
-                        onClickEnter={handleClickArrow}
+                        onClickEnter={handleClick}
                         state={Steps.Second}
                         hasEye
                         signIn={step}
@@ -115,7 +121,7 @@ const SignInPage: React.FC = () => {
                     />
                     <div className="footer">
                         <Link to="/sign-up">
-                            <Button text="У меня нет аккаунта" />
+                            <Button text="У меня нет аккаунта" onClick={handleClickToSignUp} />
                         </Link>
                     </div>
                 </div>
