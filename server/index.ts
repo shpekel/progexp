@@ -2,8 +2,7 @@ import express, { Express } from 'express'
 import cors from 'cors'
 import pkg from 'body-parser'
 import './database'
-import { AuthSessionHandler } from "./AuthService/AuthSessionHandler";
-import { AuthSession } from "./AuthService/AuthSession";
+import { AuthController } from './AuthService/controller'
 
 const app: Express = express()
 
@@ -19,9 +18,6 @@ const { json } = pkg
 
 app.use(json())
 
-app.post('/api/users/register', {
-    const authSession = AuthSessionHandler.get(...)
-    authSession.onPlayerTryRegister
-})
+app.post('/api/users/add', AuthController.addUser)
 
-app.post('/api/users/login', apiLogin)
+app.post('/api/users/get', AuthController.getUser)

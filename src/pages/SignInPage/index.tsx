@@ -8,9 +8,9 @@ import Checkbox from '../../components/Checkbox'
 import Button from '../../components/Button'
 import { Link } from 'react-router-dom'
 import { CSSTransition, SwitchTransition } from 'react-transition-group'
-import { login as apiLogin } from '../../../shared/auth/login'
 import { validateAndSendNotify } from '../../../shared/auth/validateAndSendNotify'
 import { AuthValidationRegExps } from '../../../shared/auth/validationRegExps'
+import { AuthApiClient } from '../../../shared/auth/api'
 
 const SignInPage: React.FC = () => {
     const dispatch = useAppDispatch()
@@ -50,8 +50,7 @@ const SignInPage: React.FC = () => {
                     )
                 ) {
                     dispatch(authActions.setStep(Steps.Third))
-                    apiLogin(login, password)
-                    console.log('her')
+                    AuthApiClient.getUser(login, password)
                 }
                 break
             }

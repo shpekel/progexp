@@ -8,8 +8,8 @@ import { AuthValidationRegExps } from '../../../shared/auth/validationRegExps'
 import Button from '../../components/Button'
 import { CSSTransition, SwitchTransition } from 'react-transition-group'
 import { Link } from 'react-router-dom'
-import { register } from '../../../shared/auth/register'
 import { validateAndSendNotify } from '../../../shared/auth/validateAndSendNotify'
+import { AuthApiClient } from '../../../shared/auth/api'
 
 const SignInPage: React.FC = () => {
     const dispatch = useAppDispatch()
@@ -68,7 +68,7 @@ const SignInPage: React.FC = () => {
                     )
                 ) {
                     dispatch(authActions.setStep(Steps.Fourth))
-                    register(login, password, email).then()
+                    AuthApiClient.addUser(login, password, email)
                 }
                 break
             }

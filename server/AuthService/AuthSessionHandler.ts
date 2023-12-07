@@ -4,9 +4,12 @@ import { AuthSession } from './AuthSession'
 const sessionStorage = new Map<number, AuthSession>()
 let idGenerator: number = 0
 export class AuthSessionHandler {
-    static create(user: UserData): void {
+    static create(): AuthSession {
         const id: number = idGenerator++
-        sessionStorage.set(id, new AuthSession(id, user))
+        const user = new AuthSession(id)
+        sessionStorage.set(id, user)
+        return user
+        // user.onUserTryLogin()
     }
 
     static get(user: UserData): AuthSession {
