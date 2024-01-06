@@ -1,4 +1,4 @@
-import { Steps } from '../features/types/AuthType'
+import { Steps } from '../features/enums/AuthType'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 type TAuthState = {

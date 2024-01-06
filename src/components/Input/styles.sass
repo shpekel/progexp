@@ -17,7 +17,7 @@
     font-weight: 500
     background: var(--color-background)
     z-index: 4
-    transition: font-size .25s ease, transform .25s ease
+    transition: all .25s ease
 
   > .bg
     position: absolute
@@ -40,6 +40,19 @@
     box-sizing: border-box
     transition: border-color .25s ease, border-radius .25s ease
     z-index: 3
+
+  > .search-container
+    position: absolute
+    width: 20px
+    height: 20px
+    inset: 0
+    margin: auto auto auto 20px
+
+    > .search
+      width: 20px
+      height: 20px
+      background: url("../../assets/images/search.svg") center no-repeat
+      background-size: 100%
 
   > .arrow
     position: absolute
@@ -136,6 +149,20 @@
     &:focus ~ .border
       box-sizing: border-box
       border: 3px solid var(--color-primary)
+
+  &.search
+
+    > .placeholder
+      left: 60px
+
+    > input
+      padding: 5px 80px 5px 60px
+
+      &:focus ~ .placeholder,
+      &:not(:placeholder-shown) ~ .placeholder
+        opacity: 0
+        transform: translateY(-50%)
+        font-size: 14px
 
 @keyframes bounce
   from

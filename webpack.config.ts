@@ -19,6 +19,7 @@ const config: webpack.Configuration = {
     resolve: {
         extensions: ['.js', '.ts', '.tsx', '.sass', '.mp3'],
         alias: {
+            '@': path.join(__dirname, 'src'),
             Styles: path.join(__dirname, 'src', 'styles'),
             Fonts: path.join(__dirname, 'src', 'fonts'),
             Interfaces: path.resolve(__dirname, 'src', 'interfaces')

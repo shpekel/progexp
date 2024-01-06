@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useRef, useState } from 'react'
 import './styles.sass'
-import { Steps } from '../../features/types/AuthType'
+import { Steps } from '../../features/enums/AuthType'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useAppSelector } from '../../hooks/redux'
 
@@ -23,6 +23,7 @@ interface IInput {
     signIn?: Steps
     signUp?: Steps
     roundedBottom?: boolean
+    search?: boolean
 }
 
 const Input: React.FC<IInput> = memo(
@@ -42,13 +43,16 @@ const Input: React.FC<IInput> = memo(
         rollingEye,
         signIn,
         signUp,
-        roundedBottom
+        roundedBottom,
+        search
     }) => {
         const [isVisiblePassword, setIsVisiblePassword] = useState<boolean>(false)
 
         const inputRef = useRef<HTMLInputElement>(null)
 
         const styleInput = () => {
+            if (!(signIn || signUp)) return
+
             if (roundedBottom) {
                 return { borderRadius: '0px 0px 15px 15px' }
             }
@@ -102,7 +106,7 @@ const Input: React.FC<IInput> = memo(
                     }}
                     style={style}
                 >
-                    <div className="input">
+                    <div className={`input ${search ? 'search' : ''}`}>
                         <input
                             ref={inputRef}
                             type={type === 'password' && !isVisiblePassword ? 'password' : 'text'}
@@ -114,6 +118,11 @@ const Input: React.FC<IInput> = memo(
                         <div className="placeholder">{placeholder}</div>
                         <div className="bg" style={styleInput()}></div>
                         <div className="border" style={styleInput()}></div>
+                        {search && (
+                            <div className="search-container">
+                                <div className="search" />
+                            </div>
+                        )}
                         {hasArrow && (
                             <div
                                 className={`arrow ${

@@ -1,16 +1,16 @@
 import React, { useRef, useState } from 'react'
 import './styles.sass'
-import Input from '../../components/Input'
-import { Steps } from '../../features/types/AuthType'
-import { useAppDispatch, useAppSelector } from '../../hooks/redux'
-import { authActions } from '../../reducers/authReducer'
-import Checkbox from '../../components/Checkbox'
-import Button from '../../components/Button'
+import Input from '../components/Input'
+import { Steps } from '../features/enums/AuthType'
+import { useAppDispatch, useAppSelector } from '../hooks/redux'
+import { authActions } from '../reducers/authReducer'
+import Checkbox from '../components/Checkbox'
+import Button from '../components/Button'
 import { Link } from 'react-router-dom'
 import { CSSTransition, SwitchTransition } from 'react-transition-group'
-import { validateAndSendNotify } from '../../../shared/auth/validateAndSendNotify'
-import { AuthValidationRegExps } from '../../../shared/auth/validationRegExps'
-import { AuthApiClient } from '../../../shared/auth/api'
+import { validateAndSendNotify } from '../../shared/auth/validateAndSendNotify'
+import { AuthValidationRegExps } from '../../shared/auth/validationRegExps'
+import { AuthApiClient } from '../../shared/auth/api'
 
 const SignInPage: React.FC = () => {
     const dispatch = useAppDispatch()
@@ -71,7 +71,7 @@ const SignInPage: React.FC = () => {
                 nodeRef={nodeRef}
                 timeout={250}
                 classNames="sign-in-page"
-                mountOnEnter
+                // mountOnEnter
                 unmountOnExit
             >
                 {/*<AnimatePresence>*/}
@@ -89,39 +89,45 @@ const SignInPage: React.FC = () => {
                 {/*    )}*/}
                 {/*</AnimatePresence>*/}
                 <div className="sign-in-page" ref={nodeRef}>
-                    <div className="title">Войдите в ProgExp</div>
-                    <Input
-                        value={login}
-                        setValue={setLogin}
-                        placeholder="Введите логин"
-                        hasArrow
-                        step={step}
-                        setStep={handleClick}
-                        onClickEnter={handleClick}
-                        state={Steps.First}
-                        signIn={step}
-                    />
-                    <Input
-                        value={password}
-                        setValue={setPassword}
-                        type="password"
-                        placeholder="Введите пароль"
-                        isActive={step !== Steps.First}
-                        onClickEnter={handleClick}
-                        state={Steps.Second}
-                        hasEye
-                        signIn={step}
-                    />
-                    <Checkbox
-                        text="Запомнить меня"
-                        checked={isRememberMe}
-                        setChecked={setIsRememberMe}
-                        style={{ marginTop: '10px' }}
-                    />
-                    <div className="footer">
-                        <Link to="/sign-up">
-                            <Button text="У меня нет аккаунта" onClick={handleClickToSignUp} />
-                        </Link>
+                    <div className="content">
+                        <div className="title">Войдите в ProgExp</div>
+                        <Input
+                            value={login}
+                            setValue={setLogin}
+                            placeholder="Введите логин"
+                            hasArrow
+                            step={step}
+                            setStep={handleClick}
+                            onClickEnter={handleClick}
+                            state={Steps.First}
+                            signIn={step}
+                        />
+                        <Input
+                            value={password}
+                            setValue={setPassword}
+                            type="password"
+                            placeholder="Введите пароль"
+                            isActive={step !== Steps.First}
+                            onClickEnter={handleClick}
+                            state={Steps.Second}
+                            hasEye
+                            signIn={step}
+                        />
+                        <Checkbox
+                            text="Запомнить меня"
+                            checked={isRememberMe}
+                            setChecked={setIsRememberMe}
+                            style={{ marginTop: '10px' }}
+                        />
+                        <div className="footer">
+                            <Link to="/sign-up">
+                                <Button
+                                    text="У меня нет аккаунта"
+                                    onClick={handleClickToSignUp}
+                                    style={{ marginTop: '25px' }}
+                                />
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </CSSTransition>

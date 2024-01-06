@@ -1,15 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react'
 import './styles.sass'
-import Input from '../../components/Input'
-import { Steps } from '../../features/types/AuthType'
-import { useAppDispatch, useAppSelector } from '../../hooks/redux'
-import { authActions } from '../../reducers/authReducer'
-import { AuthValidationRegExps } from '../../../shared/auth/validationRegExps'
-import Button from '../../components/Button'
+import Input from '../components/Input'
+import { Steps } from '../features/enums/AuthType'
+import { useAppDispatch, useAppSelector } from '../hooks/redux'
+import { authActions } from '../reducers/authReducer'
+import { AuthValidationRegExps } from '../../shared/auth/validationRegExps'
+import Button from '../components/Button'
 import { CSSTransition, SwitchTransition } from 'react-transition-group'
 import { Link } from 'react-router-dom'
-import { validateAndSendNotify } from '../../../shared/auth/validateAndSendNotify'
-import { AuthApiClient } from '../../../shared/auth/api'
+import { validateAndSendNotify } from '../../shared/auth/validateAndSendNotify'
+import { AuthApiClient } from '../../shared/auth/api'
+import { notifiesActions } from '../reducers/notifyesReducer'
 
 const SignInPage: React.FC = () => {
     const dispatch = useAppDispatch()
@@ -103,56 +104,62 @@ const SignInPage: React.FC = () => {
                 unmountOnExit
             >
                 <div className="sign-up-page" ref={nodeRef}>
-                    <div className="title">Регистрация в ProgExp</div>
-                    <Input
-                        value={login}
-                        setValue={setLogin}
-                        placeholder="Придумайте логин"
-                        hasArrow
-                        step={step}
-                        setStep={handleClick}
-                        onClickEnter={handleClick}
-                        state={Steps.First}
-                        signUp={step}
-                    />
-                    <Input
-                        value={email}
-                        setValue={setEmail}
-                        placeholder="Введите свой E-mail"
-                        isActive={isActiveEmail}
-                        onClickEnter={handleClick}
-                        state={Steps.Second}
-                        signUp={step}
-                    />
-                    <Input
-                        value={password}
-                        setValue={setPassword}
-                        type="password"
-                        placeholder="Придумайте пароль"
-                        isActive={isActivePassword}
-                        onClickEnter={handleClick}
-                        state={Steps.Third}
-                        hasEye
-                        rollingEye={rollingEye}
-                        signUp={step}
-                    />
-                    <Input
-                        value={rePassword}
-                        setValue={setRePassword}
-                        type="password"
-                        placeholder="Повторите пароль"
-                        isActive={isActivePassword}
-                        onClickEnter={handleClick}
-                        state={Steps.Third}
-                        hasEye
-                        signUp={step}
-                        roundedBottom
-                    />
+                    <div className="content">
+                        <div className="title">Регистрация в ProgExp</div>
+                        <Input
+                            value={login}
+                            setValue={setLogin}
+                            placeholder="Придумайте логин"
+                            hasArrow
+                            step={step}
+                            setStep={handleClick}
+                            onClickEnter={handleClick}
+                            state={Steps.First}
+                            signUp={step}
+                        />
+                        <Input
+                            value={email}
+                            setValue={setEmail}
+                            placeholder="Введите свой E-mail"
+                            isActive={isActiveEmail}
+                            onClickEnter={handleClick}
+                            state={Steps.Second}
+                            signUp={step}
+                        />
+                        <Input
+                            value={password}
+                            setValue={setPassword}
+                            type="password"
+                            placeholder="Придумайте пароль"
+                            isActive={isActivePassword}
+                            onClickEnter={handleClick}
+                            state={Steps.Third}
+                            hasEye
+                            rollingEye={rollingEye}
+                            signUp={step}
+                        />
+                        <Input
+                            value={rePassword}
+                            setValue={setRePassword}
+                            type="password"
+                            placeholder="Повторите пароль"
+                            isActive={isActivePassword}
+                            onClickEnter={handleClick}
+                            state={Steps.Third}
+                            hasEye
+                            signUp={step}
+                            roundedBottom
+                        />
 
-                    <div className="footer">
-                        <Link to="/sign-in">
-                            <Button text="У меня уже есть аккаунт" onClick={handleClickToSignIn} />
-                        </Link>
+                        <div className="footer">
+                            <Link to="/sign-in">
+                                <Button
+                                    text="У меня уже есть аккаунт"
+                                    onClick={handleClickToSignIn}
+                                    style={{ marginTop: '45px' }}
+                                />
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </CSSTransition>

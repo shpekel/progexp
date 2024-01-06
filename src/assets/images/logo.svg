@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg  xmlns="http://www.w3.org/2000/svg" width="70.54" height="46.63" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 70.54 26.63">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#_Безымянный_градиент_147-2);
+      }
+
+      .cls-2 {
+        fill: url(#_Безымянный_градиент_122-3);
+      }
+
+      .cls-3 {
+        fill: url(#_Безымянный_градиент_122-2);
+      }
+
+      .cls-4 {
+        fill: url(#_Безымянный_градиент_147);
+      }
+
+      .cls-5 {
+        fill: url(#_Безымянный_градиент_122);
+      }
+    </style>
+    <linearGradient id="_Безымянный_градиент_147" data-name="Безымянный градиент 147" x1="29.1" y1=".18" x2="29.1" y2="30.16" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#00bfff"/>
+      <stop offset="1" stop-color="#df45dfa3"/>
+    </linearGradient>
+    <linearGradient id="_Безымянный_градиент_147-2" data-name="Безымянный градиент 147" x1="42.3" y1="30.34" x2="42.3" y2="8.72" xlink:href="#_Безымянный_градиент_147"/>
+    <linearGradient id="_Безымянный_градиент_122" data-name="Безымянный градиент 122" x1="22.2" y1="30.54" x2="22.2" y2="0" gradientTransform="translate(45.43 28.36) rotate(175)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#8a2be2"/>
+      <stop offset="1" stop-color="#cc93cc"/>
+    </linearGradient>
+    <linearGradient id="_Безымянный_градиент_122-2" data-name="Безымянный градиент 122" x1="35.45" y1="30.34" x2="35.45" y2="8.54" gradientTransform="translate(72.46 35.71) rotate(175)" xlink:href="#_Безымянный_градиент_122"/>
+    <linearGradient id="_Безымянный_градиент_122-3" data-name="Безымянный градиент 122" x1="49.03" y1="30.37" x2="49.03" y2="15.17" gradientTransform="matrix(1, 0, 0, 1, 0, 0)" xlink:href="#_Безымянный_градиент_122"/>
+  </defs>
+  <g id="logotype-black">
+    <g id="logotype-black-2" data-name="logotype-black">
+      <g>
+        <g>
+          <polygon class="cls-4" points="21.61 2.46 26.76 .18 36.59 27.62 31.16 30.16 21.61 2.46"/>
+          <polygon class="cls-1" points="34.95 11.76 39.75 8.72 49.66 27.31 45.16 30.34 34.95 11.76"/>
+          <path class="cls-5" d="m21.16-.17h1.87c1.33,0,2.41,1.08,2.41,2.41v23.45c0,2.66-2.16,4.82-4.82,4.82h-1.87V2.24c0-1.33,1.08-2.41,2.41-2.41Z" transform="translate(42.79 32.21) rotate(-175)"/>
+          <path class="cls-3" d="m36.93,8.38h1.87v17.29c0,2.66-2.16,4.82-4.82,4.82h-1.87V13.2c0-2.66,2.16-4.82,4.82-4.82Z" transform="translate(69.07 41.89) rotate(-175)"/>
+          <path class="cls-2" d="m49.84,15.18h.08c1.81.17,3.13,1.74,2.97,3.53-.14,1.61-.32,3.63-.49,5.56-.32,3.68-3.57,6.4-7.25,6.08h0s.66-7.58,1.05-12.12c.16-1.84,1.78-3.2,3.63-3.04Z"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
