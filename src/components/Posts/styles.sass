@@ -8,36 +8,9 @@
   > .posts
     width: 700px
     height: 100%
-    margin-top: 100px
+    margin-top: 60px
     display: flex
     flex-direction: column
     gap: 20px
+    pointer-events: auto
 
-    > .post
-      position: relative
-      width: 100%
-      border-radius: $border-radius-primary
-      padding: 30px 50px
-      background: #191919
-      color: var(--color-text-primary)
-      cursor: pointer
-      transition: all 0.25s ease
-
-      &:hover
-        scale: 1.05
-
-      &:active
-        opacity: 0.8
-
-      > .title
-        font-size: 20px
-        font-weight: 500
-
-      > .description
-        margin-top: 10px
-
-      > img
-        width: 100%
-        height: auto
-        margin-top: 20px
-        border-radius: 10px

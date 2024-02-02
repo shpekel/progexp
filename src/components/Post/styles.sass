@@ -1,0 +1,56 @@
+@import "Styles/variables"
+@import "Styles/mixins"
+
+.posts .post
+  position: relative
+  width: 100%
+  border-radius: $border-radius-primary
+  padding: 30px 50px
+  background: #191919
+  color: var(--color-text-primary)
+  cursor: pointer
+  transition: all 0.25s ease
+
+  //&:hover
+  //  scale: 1.05
+  //
+  //&:active
+  //  opacity: 0.8
+
+  > .title
+    font-size: 20px
+    font-weight: 500
+
+  > .description
+    margin-top: 10px
+
+  > .images-container
+    position: relative
+    overflow: hidden
+    margin-top: 20px
+    border-radius: 10px
+
+    > .buttons
+      position: absolute
+      display: flex
+      justify-content: space-between
+      align-items: center
+      width: 100%
+      height: 100%
+      z-index: 2
+
+      > .button
+        width: 25px
+        height: 25px
+        background: red
+
+    > .images
+      position: relative
+      display: flex
+      width: 100%
+      transition: right .25s ease
+
+      > img
+        display: flex
+        width: 100%
+        height: auto

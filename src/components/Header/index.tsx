@@ -16,9 +16,9 @@ const Header: FC = () => {
         const newTheme = theme === ThemeType.Dark ? ThemeType.White : ThemeType.Dark
         dispatch(mainActions.setTheme(newTheme))
 
-        if (newTheme === ThemeType.Dark) {
-            document.documentElement.setAttribute('dark-theme', '')
-        } else document.documentElement.removeAttribute('dark-theme')
+        if (newTheme === ThemeType.White) {
+            document.documentElement.setAttribute('white-theme', '')
+        } else document.documentElement.removeAttribute('white-theme')
     }
 
     return (
