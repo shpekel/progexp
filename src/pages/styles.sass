@@ -10,6 +10,7 @@
     padding: 25px
     background: var(--color-background)
     border-radius: $border-radius-primary
+    pointer-events: auto
     overflow: hidden
 
     > .title
@@ -25,3 +26,24 @@
 
   > .footer
     margin-top: 20px
+
+.post-page
+  +center-block()
+  position: static
+
+  > .content
+    width: 900px
+    border-radius: 20px
+    padding: 30px
+    color: var(--color-text-primary)
+    background: #191919
+    margin-top: 60px
+    display: flex
+    flex-direction: column
+    gap: 20px
+    pointer-events: auto
+
+    > .title
+      color: white
+      font-weight: 600
+      font-size: 24px

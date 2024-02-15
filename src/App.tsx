@@ -5,6 +5,7 @@ import SignInPage from './pages/SignIn'
 import SignUpPage from './pages/SignUp'
 import Notify from './components/Notify'
 import MainPage from './pages/Main'
+import Post from './pages/Post'
 
 const App: React.FC = () => {
     return (
@@ -15,6 +16,7 @@ const App: React.FC = () => {
                     <Route path="/" element={<MainPage />} />
                     <Route path="sign-in" element={<SignInPage />} />
                     <Route path="sign-up" element={<SignUpPage />} />
+                    <Route path="/post/:postId" element={<Post />} />
                     <Route path="*" element={<Navigate to="sign-in" replace />} />
                 </Routes>
             </BrowserRouter>

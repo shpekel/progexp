@@ -1,0 +1,52 @@
+@import "Styles/variables"
+@import "Styles/mixins"
+
+.modal-overlay
+  +center-block()
+  background: rgba(0, 0, 0, 0.5)
+  z-index: 9999
+
+  > .modal
+    width: 500px
+    pointer-events: auto
+    background: var(--color-background)
+    display: flex
+    flex-direction: column
+    border-radius: 15px
+    padding: 20px
+
+    > .content
+      margin-top: 20px
+      color: var(--color-text-primary)
+
+      > .label
+        > .description
+          font-size: 14px
+          margin-block: 10px
+
+    > .line
+      display: flex
+      align-items: center
+
+      > .title
+        font-size: 20px
+        font-weight: 600
+        color: white
+
+      > .modal-close-btn
+        position: relative
+        margin-left: auto
+        width: 30px
+        height: 30px
+        transition: background .25s ease
+        border-radius: 6px
+
+        > .icon
+          position: absolute
+          width: 100%
+          height: 100%
+          background: url("../../assets/images/close.svg") center no-repeat
+          background-size: 100%
+
+        &:hover
+          background: var(--color-primary-hitting)

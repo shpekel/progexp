@@ -24,6 +24,8 @@ interface IInput {
     signUp?: Steps
     roundedBottom?: boolean
     search?: boolean
+    textArea?: boolean
+    noAnim?: boolean
 }
 
 const Input: React.FC<IInput> = memo(
@@ -44,7 +46,9 @@ const Input: React.FC<IInput> = memo(
         signIn,
         signUp,
         roundedBottom,
-        search
+        search,
+        textArea,
+        noAnim
     }) => {
         const [isVisiblePassword, setIsVisiblePassword] = useState<boolean>(false)
 
@@ -106,7 +110,11 @@ const Input: React.FC<IInput> = memo(
                     }}
                     style={style}
                 >
-                    <div className={`input ${search ? 'search' : ''}`}>
+                    <div
+                        className={`input ${search ? 'search' : ''} ${
+                            textArea ? 'text-area' : ''
+                        } ${noAnim ? 'no-anim' : ''}`}
+                    >
                         <input
                             ref={inputRef}
                             type={type === 'password' && !isVisiblePassword ? 'password' : 'text'}
