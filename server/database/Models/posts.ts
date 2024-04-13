@@ -5,6 +5,8 @@ interface PostData extends Document {
     title: string
     description: string
     img: string
+    dateTime: Date
+    author: string
 }
 
 class Posts extends Model<Posts> {
@@ -26,6 +28,15 @@ class Posts extends Model<Posts> {
         img: {
             type: String,
             required: false
+        },
+        dateTime: {
+            type: Date,
+            required: true,
+            default: new Date()
+        },
+        author: {
+            type: String,
+            required: true
         }
     })
 

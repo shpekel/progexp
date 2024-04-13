@@ -1,6 +1,6 @@
 import mongoose, { connect } from 'mongoose'
 
-const mongoURL: string = 'mongodb://localhost:27017/progexp'
+const mongoURL: string = 'mongodb+srv://stepanzaxarov01:AEdliADBVy8rd8pl@cluster0.ajyt0zp.mongodb.net/'
 
 const connectToMongoDB = async () => {
     try {

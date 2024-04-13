@@ -1,24 +1,9 @@
 import React, { FC, useEffect, useState } from 'react'
 import './styles.sass'
 import Post from '../Post'
-import Button from '../Button'
-
-// const posts = [
-//     {
-//         title: 'JavaScript теория',
-//         description:
-//             'JavaScript – это язык программирования, который добавляет интерактивность на ваш веб-сайт (например: игры, отклик при нажатии кнопок или при вводе данных в формы, динамические стили, анимация). Эта статья поможет вам начать работать с этим захватывающим языком и даст вам представление о том, на что он способен.',
-//         img: ['programmer1.jpg', '89900949e098a80f8fc33964de5f52a6.jpeg']
-//     },
-//     {
-//         title: 'JavaScript теория',
-//         description:
-//             'JavaScript – это язык программирования, который добавляет интерактивность на ваш веб-сайт (например: игры, отклик при нажатии кнопок или при вводе данных в формы, динамические стили, анимация). Эта статья поможет вам начать работать с этим захватывающим языком и даст вам представление о том, на что он способен.',
-//         img: ['programmer1.jpg', '89900949e098a80f8fc33964de5f52a6.jpeg']
-//     }
-// ]
+import { motion } from 'framer-motion'
 const Posts: FC = () => {
-    const [posts, setPosts] = useState<any[]>([])
+    const [posts, setPosts] = useState([])
 
     const initPosts = async () => {
         try {
@@ -30,7 +15,6 @@ const Posts: FC = () => {
 
             const data = await response.json()
             setPosts(data)
-            console.log(data)
         } catch (error) {
             console.error(error)
             // Обработка ошибки, например, установка пустого массива в случае неудачи
@@ -43,9 +27,16 @@ const Posts: FC = () => {
     }, [])
 
     return (
-        <div className="posts-container">
+        <motion.div
+            className="posts-container"
+            transition={{ duration: 0.5, ease: 'easeInOut' }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+        >
             <div className="posts">
-                {Array.isArray(posts) && posts.length > 0 ? (
+                {Array.isArray(posts) &&
+                    posts.length > 0 &&
                     posts.map((post, index: number) => (
                         <Post
                             key={index}
@@ -54,12 +45,9 @@ const Posts: FC = () => {
                             description={post.description}
                             img={post.img}
                         />
-                    ))
-                ) : (
-                    <p>No posts available</p>
-                )}
+                    ))}
             </div>
-        </div>
+        </motion.div>
     )
 }
 

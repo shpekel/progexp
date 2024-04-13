@@ -7,7 +7,7 @@ interface UserData extends Document {
     email: string
 }
 
-class User extends Model<User> {
+class Users extends Model<Users> {
     private static userSchema = new Schema<UserData>({
         id: {
             type: Number,
@@ -32,12 +32,12 @@ class User extends Model<User> {
         }
     })
 
-    public static async createUser(userData: User): Promise<UserData | null> {
-        const lastAccount = await User.model.findOne().sort({ id: -1 })
+    public static async createUser(userData: Users): Promise<UserData | null> {
+        const lastAccount = await Users.model.findOne().sort({ id: -1 })
         const id = lastAccount ? lastAccount.id + 1 : 0
 
         try {
-            return await User.model.create({
+            return await Users.model.create({
                 ...userData,
                 id: id
             })
@@ -50,4 +50,4 @@ class User extends Model<User> {
     public static model: Model<UserData> = model<UserData>('Users', this.userSchema)
 }
 
-export { User }
+export { Users }

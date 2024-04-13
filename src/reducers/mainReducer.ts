@@ -3,10 +3,14 @@ import { ThemeType } from '../features/enums/ThemeType'
 
 type TMainState = {
     theme: ThemeType
+    isAuth: boolean
+    id: number
 }
 
 const initialState: TMainState = {
-    theme: ThemeType.Dark
+    theme: ThemeType.Dark,
+    isAuth: false,
+    id: null
 }
 
 export const mainSlice = createSlice({
@@ -15,6 +19,12 @@ export const mainSlice = createSlice({
     reducers: {
         setTheme(state, action: PayloadAction<ThemeType>) {
             state.theme = action.payload
+        },
+        setIsAuth(state, action: PayloadAction<boolean>) {
+            state.isAuth = action.payload
+        },
+        setId(state, action: PayloadAction<number>) {
+            state.id = action.payload
         }
     }
 })

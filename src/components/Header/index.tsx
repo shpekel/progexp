@@ -1,5 +1,9 @@
 import React, { FC, useState } from 'react'
 import './styles.sass'
+import { Editor, EditorState } from 'react-draft-wysiwyg'
+import { convertToRaw } from 'draft-js'
+import draftToHtml from 'draftjs-to-html'
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import Input from '../Input'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import { mainActions } from '../../reducers/mainReducer'
@@ -7,6 +11,7 @@ import { ThemeType } from '../../features/enums/ThemeType'
 import { Link, useLocation } from 'react-router-dom'
 import Modal from '../Modal'
 import Button, { ButtonStyles } from '../Button'
+import { AnimatePresence, motion } from 'framer-motion'
 
 const Header: FC = () => {
     const dispatch = useAppDispatch()
@@ -15,13 +20,15 @@ const Header: FC = () => {
     const [isOpenCreatePost, setIsOpenCreatePost] = useState<boolean>(false)
 
     const [postTitle, setPostTitle] = useState<string>('')
-    const [postDescription, setPostDescription] = useState<string>('')
+    const [postDescription, setPostDescription] = useState<EditorState>()
 
     const [selectedImage, setSelectedImage] = useState(null)
 
     const [search, setSearch] = useState<string>('')
 
     let location = useLocation()
+
+    const isAuth = location.pathname === '/sign-in' || location.pathname === '/sign-up'
 
     const handleToggleTheme = () => {
         const newTheme = theme === ThemeType.Dark ? ThemeType.White : ThemeType.Dark
@@ -47,7 +54,7 @@ const Header: FC = () => {
             },
             body: JSON.stringify({
                 title: postTitle,
-                description: postDescription,
+                description: draftToHtml(convertToRaw(postDescription.getCurrentContent())),
                 img: selectedImage.name
             })
         })
@@ -60,50 +67,68 @@ const Header: FC = () => {
 
     return (
         <>
-            <div className="header">
-                <div className="logo-container">
-                    <div className="logo" />
-                    <div className="text">Prog</div>
-                    <div className="text primary">Exp</div>
-                </div>
-                <div className="theme-container">
-                    <div className={`theme type-${theme}`} onClick={handleToggleTheme} />
-                </div>
-                <Input
-                    style={{ width: '300px' }}
-                    search
-                    placeholder="Поиск..."
-                    value={search}
-                    setValue={setSearch}
-                />
-                <div className="user-container">
-                    <div className="text">Stepandepala</div>
-                    <div className="avatar" />
-                </div>
-            </div>
-            <div className="navbar">
-                <Link to="/">
-                    <span className={location.pathname === '/' ? 'active' : ''}>Главная</span>
-                </Link>
-                <Link to="js">
-                    <span>Теория</span>
-                </Link>
-                <Link to="forum">
-                    <span>Форум</span>
-                </Link>
-                <Link to="question">
-                    <span>Задать вопрос</span>
-                </Link>
-                <a onClick={toggleClickToCreatePost}>
-                    <span>Создать пост</span>
-                </a>
-                <Link to="messages">
-                    <span>Сообщения</span>
-                </Link>
-                <Link to="">
-                    <span>Случайная статья</span>
-                </Link>
-            </div>
+            <AnimatePresence>
+                {!isAuth && (
+                    <motion.div
+                        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                        initial={{ opacity: 0, transform: 'translateY(-100%)' }}
+                        animate={{ opacity: 1, transform: 'translateY(0)' }}
+                        exit={{ opacity: 0, transform: 'translateY(-100%)' }}
+                    >
+                        <div className="header">
+                            <Link to="/">
+                                <div className="logo-container">
+                                    <div className="logo" />
+                                    <div className="text">Prog</div>
+                                    <div className="text primary">Exp</div>
+                                </div>
+                            </Link>
+                            <div className="theme-container">
+                                <div
+                                    className={`theme type-${theme}`}
+                                    onClick={handleToggleTheme}
+                                />
+                            </div>
+                            <Input
+                                style={{ width: '300px' }}
+                                search
+                                placeholder="Поиск..."
+                                value={search}
+                                setValue={setSearch}
+                            />
+                            <div className="user-container">
+                                <div className="text">Stepandepala</div>
+                                <div className="avatar" />
+                            </div>
+                        </div>
+                        <div className="navbar">
+                            <Link to="/">
+                                <span className={location.pathname === '/' ? 'active' : ''}>
+                                    Главная
+                                </span>
+                            </Link>
+                            <Link to="/js">
+                                <span>Теория</span>
+                            </Link>
+                            <Link to="/forum">
+                                <span>Форум</span>
+                            </Link>
+                            <Link to="/question">
+                                <span>Задать вопрос</span>
+                            </Link>
+                            <a onClick={toggleClickToCreatePost}>
+                                <span>Создать пост</span>
+                            </a>
+                            <Link to="/dialogs">
+                                <span>Сообщения</span>
+                            </Link>
+                            <Link to="/">
+                                <span>Случайная статья</span>
+                            </Link>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
             <Modal
                 isOpen={isOpenCreatePost}
                 onClose={toggleClickToCreatePost}
@@ -120,13 +145,17 @@ const Header: FC = () => {
                 </div>
                 <div className="label">
                     <div className="description">Описание:</div>
-                    <Input
-                        placeholder="Подумайте о чём-то, прежде чем писать сюда что-либо"
-                        textArea
-                        noAnim
-                        value={postDescription}
-                        setValue={setPostDescription}
+                    <Editor
+                        editorState={postDescription}
+                        onEditorStateChange={(state) => setPostDescription(state)}
                     />
+                    {/*<Input*/}
+                    {/*    placeholder="Подумайте о чём-то, прежде чем писать сюда что-либо"*/}
+                    {/*    textArea*/}
+                    {/*    noAnim*/}
+                    {/*    value={postDescription}*/}
+                    {/*    setValue={setPostDescription}*/}
+                    {/*/>*/}
                 </div>
                 <div className="label">
                     <div className="description">Загрузите сюда своё изображение:</div>
@@ -134,7 +163,6 @@ const Header: FC = () => {
                         type="file"
                         name="img"
                         onChange={(event) => {
-                            console.log(event.target.files[0])
                             setSelectedImage(event.target.files[0])
                         }}
                     />

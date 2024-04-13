@@ -6,7 +6,8 @@ import 'webpack-dev-server'
 const config: webpack.Configuration = {
     entry: path.join(__dirname, 'index.tsx'),
     output: {
-        path: path.join(__dirname, '../../client_packages/browser'),
+        publicPath: '/',
+        path: path.join(__dirname, 'build'),
         assetModuleFilename: 'assets/[hash][ext][query]',
         clean: true
     },

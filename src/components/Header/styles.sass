@@ -8,24 +8,27 @@
   justify-content: center
   background: var(--color-surface-dark)
 
-  > .logo-container
-    margin-right: 25px
-    display: flex
-    align-items: center
+  > a
 
-    > .logo
-      width: 50px
-      height: 50px
-      background: url("../../assets/images/logo.svg") center no-repeat
-      background-size: 100%
+    > .logo-container
+      margin-right: 25px
+      display: flex
+      align-items: center
+      cursor: pointer
 
-    > .text
-      color: var(--color-text-primary)
-      font-size: 24px
-      font-weight: 700
+      > .logo
+        width: 50px
+        height: 50px
+        background: url("../../assets/images/logo.svg") center no-repeat
+        background-size: 100%
 
-      &.primary
-        color: var(--color-primary)
+      > .text
+        color: var(--color-text-primary)
+        font-size: 24px
+        font-weight: 700
+
+        &.primary
+          color: var(--color-primary)
 
   > .input__wrapper
 

@@ -12,6 +12,10 @@
   transition: background .25s ease, color .25s ease, opacity .25s ease
   border-radius: $border-radius-primary
 
+  > .icon
+    width: 25px
+    height: 25px
+
   &.type-0
     color: var(--color-text-primary)
 
@@ -38,3 +42,30 @@
   &.type-2
     height: 40px
     border-radius: $border-radius-primary
+
+  &.type-3
+    color: var(--color-text-primary)
+    background: #2b53c7
+    font-weight: 600
+    height: 50px
+    border-radius: 20px
+
+    &:hover
+      background: #2344a4
+
+    &:active
+      opacity: 0.8
+
+  &.type-4
+    color: var(--color-text-primary)
+    background: #e04242
+    font-weight: 600
+    height: 50px
+    border-radius: 18px
+
+    &:hover
+      background: #be3939
+
+
+    &:active
+      opacity: 0.8
